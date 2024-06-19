@@ -27,11 +27,14 @@ const App = () => {
   };
 
   const takePhoto = () => {
-    const width = 940;
-    const height = 720;
-
     let video = videoRef.current;
     let photo = photoRef.current;
+
+    const videoWidth = video.videoWidth;
+    const videoHeight = video.videoHeight;
+
+    const width = 940;
+    const height = (videoHeight / videoWidth) * width;
 
     photo.width = width;
     photo.height = height;
@@ -40,6 +43,7 @@ const App = () => {
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
   };
+
 
   const retakePhoto = () => {
     setHasPhoto(false);
@@ -92,8 +96,8 @@ const App = () => {
           <div className={`md:absolute top-0  md:left-64 mdm:left-60 lg:left-72 xl:left-80 xxs:w-[360px] xxs:h-[480px]  mdm:w-[360px] mdm:h-[460px] lg:w-[390px] lg:h-[480px] xxs:m-auto  `}>
             <h3 className='text-end pr-4 mb-2 text-white text-sm'>Home</h3>
             <div className='relative h-full'>
-              <video ref={videoRef} className={`video w-[96%] h-[96%] object-cover ${hasPhoto ? 'hidden' : ''}`}></video>
-              <canvas ref={photoRef} className={`photo w-[96%] h-[96%] object-cover ${hasPhoto ? '' : 'hidden'}`}></canvas>
+              <video ref={videoRef} className={` w-[96%] h-[96%] object-cover ${hasPhoto ? 'hidden' : ''}`}></video>
+              <canvas ref={photoRef} className={` w-[96%] h-[96%] object-cover  ${hasPhoto ? '' : 'hidden'}`}></canvas>
               <img src={frameImage} className=" absolute -top-1 -left-2.5 w-full h-full pointer-events-none" alt="frame" />
             </div>
           </div>
