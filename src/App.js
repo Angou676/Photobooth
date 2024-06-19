@@ -9,8 +9,8 @@ const App = () => {
   const videoRef = useRef(null);
   const photoRef = useRef(null);
   const streamRef = useRef(null);
+
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,13 +23,6 @@ const App = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    if (/android|iPad|iPhone|iPod/i.test(userAgent)) {
-      setIsMobile(true);
-    }
   }, []);
 
   const getVideo = () => {
@@ -65,6 +58,7 @@ const App = () => {
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
   };
+
 
   const retakePhoto = () => {
     setHasPhoto(false);
@@ -108,12 +102,15 @@ const App = () => {
     }
   }
 
+
   return (
-    <div className={`app xxs:block xmd:flex justify-between ${isMobile || screenHeight < 350 ? "h-96" : "h-screen"}  `} >
+    <div className={`app xxs:block xmd:flex justify-between h-screen  `} >
       <div className="xxs:w-full mdm:w-3/4 flex justify-end">
+
         <section className='xxs:my-16 xmd:my-20  md:my-32  h-[60vh] xxs:w-full xmd:w-11/12 xl:w-5/6  xxs:-mr-0 mdm:-mr-20 relative' >
+
           <div className={`xmd:absolute top-0 xmd:left-52  md:left-64 mdm:left-60 lg:left-72 xl:left-80 xxs:w-[360px] xxs:h-[480px] xmd:w-[140px] xmd:h-[180px]  md:w-[200px] md:h-[300px]  mdm:w-[280px] mdm:h-[380px] lg:w-[300px] lg:h-[400px] xxs:m-auto  `}>
-            <h3 className='text-end  mb-2 text-white text-sm'>Home</h3>
+            <h3 className='text-end  mb-2 text-white text-sm'>{screenHeight}Home{window.innerWidth}</h3>
             <div className='relative h-full w-full'>
               <video ref={videoRef} className={` w-full h-full object-cover ${hasPhoto ? 'hidden' : ''}`}></video>
               <canvas ref={photoRef} className={` w-full h-full object-cover  ${hasPhoto ? '' : 'hidden'}`}></canvas>
