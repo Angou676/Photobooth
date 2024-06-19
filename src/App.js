@@ -10,6 +10,21 @@ const App = () => {
   const photoRef = useRef(null);
   const streamRef = useRef(null);
 
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const getVideo = () => {
     navigator.mediaDevices
       .getUserMedia({ video: { width: 1280, height: 720 } })
@@ -86,10 +101,10 @@ const App = () => {
       }
     }
   }
-  const screenHeight = window.innerHeight
+
 
   return (
-    <div className={`app xxs:block xmd:flex justify-between ${screenHeight < 350 ? "h-96": "h-screen"}  `} >
+    <div className={`app xxs:block xmd:flex justify-between ${screenHeight < 350 ? "h-96" : "h-screen"}  `} >
       <div className="xxs:w-full mdm:w-3/4 flex justify-end">
 
         <section className='xxs:my-16 xmd:my-20  md:my-32  h-[60vh] xxs:w-full xmd:w-11/12 xl:w-5/6  xxs:-mr-0 mdm:-mr-20 relative' >
